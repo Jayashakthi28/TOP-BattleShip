@@ -1,0 +1,147 @@
+@font-face {
+  font-family: "Gilroy";
+  src: url(./assets/fonts/Gilroy-Regular.ttf);
+}
+@font-face {
+  font-family: "Gilroy Italic";
+  src: url(./assets/fonts/Gilroy-RegularItalic.ttf);
+}
+@font-face {
+  font-family: "Gilroy Bold";
+  src: url(./assets/fonts/Gilroy-SemiBold.ttf);
+}
+
+@mixin flex($dir: row, $jusCnt: center, $alitm: center) {
+  display: flex;
+  flex-direction: $dir;
+  justify-content: $jusCnt;
+  align-items: $alitm;
+}
+
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  outline: 0;
+  box-sizing: border-box;
+  font-family: "Gilroy", sans-serif;
+  user-select: none;
+}
+
+body {
+  // background: radial-gradient(16.65% 34.47% at 50% 50%, #FFFFFF 0%, #FBFBFB 0.01%, #fff0ba 100%);
+  background-color: #fff0ba;
+}
+
+.box {
+  display: grid;
+  grid-template-rows: repeat(10, 1fr);
+  grid-template-columns: repeat(10, 1fr);
+  height: fit-content;
+  width: fit-content;
+  grid-gap: 2px;
+  z-index: 2;
+  background-color: black;
+  border: 1.5px solid black;
+  .grid {
+    height: 50px;
+    width: 50px;
+    position: relative;
+    background-color: whitesmoke;
+  }
+}
+
+.box-left {
+  box-shadow: -16px 16px 8px 2px #000000;
+}
+
+.wrapper {
+  width: 100%;
+  @include flex($jusCnt: space-evenly);
+}
+
+.ship-cont {
+  @include flex($dir: column, $alitm: center, $jusCnt: space-evenly);
+  width: 400px;
+  position: relative;
+}
+
+.ship {
+  display: flex;
+  border: 1px solid black;
+  margin: 1rem 0;
+  .grid {
+    width: 50px;
+    height: 50px;
+    background-color: whitesmoke;
+    border: 1px solid black;
+    overflow: hidden;
+    img {
+      width: 50px;
+    }
+  }
+}
+
+.grid {
+  .ship {
+    margin: 0;
+    border: 0;
+    .grid {
+      border: 0;
+      background-color: transparent;
+    }
+  }
+}
+
+.ship-img {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.heading {
+  text-align: center;
+  font-size: 2.2rem;
+  padding: 2rem;
+
+  svg {
+    margin-left: 0.3rem;
+    animation: blink 2s ease infinite;
+  }
+}
+
+@keyframes blink {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.8);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.absolute {
+  position: absolute;
+  z-index: 2;
+  background-color: #fff0ba;
+}
+
+.column {
+  flex-direction: column;
+}
+
+.hover {
+  background-color: #000000 !important;
+}
+.blocker {
+  background-color: red !important;
+}
+.none {
+  display: none !important;
+}
