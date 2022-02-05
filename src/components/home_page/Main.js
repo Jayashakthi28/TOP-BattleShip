@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Box from "./Box";
+import { Randomise } from "./Randomise";
 import Shipcont from "./ShipCont";
 export const shipData = React.createContext(null);
 export default function Main() {
@@ -23,6 +24,8 @@ export default function Main() {
       { name: "doge_4", size: 1, type: "horizontal" },
     ],
   });
+  
+  const shipRender=(staticShips[1].length===0 && staticShips[2].length===0 && staticShips[3].length===0 && staticShips[4].length===0);
   return (
     <shipData.Provider
       value={{
@@ -36,8 +39,9 @@ export default function Main() {
     >
       <div className="Main-cont">
         <div className="wrapper">
+          <Randomise/>
           <Box />
-          <Shipcont />
+          {(shipRender)?null:<Shipcont />}
         </div>
       </div>
     </shipData.Provider>

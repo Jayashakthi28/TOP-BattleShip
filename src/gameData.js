@@ -1,6 +1,11 @@
 const game = () => {
   let board = [];
-  const boardShips = {};
+  let boardShips = {};
+  const flushData=()=>{
+    board=[];
+    initializeBoard();
+    boardShips={};
+  }
   const initializeBoard = () => {
     board = [];
     for (let i = 0; i < 10; i++) {
@@ -59,6 +64,7 @@ const game = () => {
     boardShips[shipName] = shipDatas;
   };
   const setShipinBoard = (x, y, r, type) => {
+    if(y<x) return false;
     if (checkPlacement(x, y, r, type)) {
       for (let j = x; j <= y; j++) {
         type === "horizontal"
@@ -97,6 +103,7 @@ const game = () => {
     removeShipfromBoard,
     checkBoardShips,
     checkPlacement,
+    flushData
   };
 };
 
