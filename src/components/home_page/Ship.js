@@ -73,7 +73,6 @@ function typeChanger(e, data, setstaticShips, setBoardship, ref) {
       return currData;
     });
   }
-  console.log(gameData.getBoard());
 }
 
 function dragStart(e, setcurrShip, data) {
