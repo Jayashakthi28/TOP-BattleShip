@@ -1,11 +1,11 @@
 const game = () => {
   let board = [];
   let boardShips = {};
-  const flushData=()=>{
-    board=[];
+  const flushData = () => {
+    board = [];
     initializeBoard();
-    boardShips={};
-  }
+    boardShips = {};
+  };
   const initializeBoard = () => {
     board = [];
     for (let i = 0; i < 10; i++) {
@@ -64,7 +64,7 @@ const game = () => {
     boardShips[shipName] = shipDatas;
   };
   const setShipinBoard = (x, y, r, type) => {
-    if(y<x) return false;
+    if (y < x) return false;
     if (checkPlacement(x, y, r, type)) {
       for (let j = x; j <= y; j++) {
         type === "horizontal"
@@ -93,6 +93,49 @@ const game = () => {
         : (board[j][r].isPlaced = false);
     }
   };
+  const randomizer = (staticShipsarr) => {
+    flushData();
+    let mainObj = {};
+    staticShipsarr.forEach((d) => {
+      let typeArr = ["horizontal", "vertical"];
+      let x,
+        y,
+        r,
+        type,
+        obj,
+        booler = false;
+      let len = 0;
+      while (booler === false) {
+        if (len > 500) {
+          updateBoard();
+          break;
+        }
+        len++;
+        x = +Math.floor(Math.random() * 10);
+        y = x + d.size - 1;
+        r = +Math.floor(Math.random() * 10);
+        type = typeArr[Math.floor(Math.random() * 2)];
+        obj = {
+          name: d.name,
+          type: type,
+          index: [x, y, r],
+          size: d.size,
+        };
+        booler = setShipinBoard(x, y, r, type);
+      }
+      if (len < 500) {
+        obj = {
+          name: d.name,
+          type: type,
+          index: [x, y, r],
+          size: d.size,
+        };
+        mainObj[d.name] = obj;
+        setShipObjinBoard(obj, d.name);
+      }
+    });
+    return mainObj;
+  };
   initializeBoard();
   return {
     getBoard,
@@ -103,7 +146,8 @@ const game = () => {
     removeShipfromBoard,
     checkBoardShips,
     checkPlacement,
-    flushData
+    flushData,
+    randomizer
   };
 };
 
