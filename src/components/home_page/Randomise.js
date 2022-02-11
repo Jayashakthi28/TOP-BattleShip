@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import { gameData } from "../../gameData";
-import { shipData } from "./Main";
+import { ACTIONS, shipData } from "./Main";
 
 export const Randomise = () => {
-  const { setboardShip, setstaticShips } = useContext(shipData);
+  const {dispatch} = useContext(shipData);
   const staticShips = {
     4: [{ name: "chakra", size: 4, type: "horizontal" }],
     3: [
@@ -33,10 +33,31 @@ export const Randomise = () => {
     <div
       onClick={(e) => {
         setTimeout(() => {
-          setstaticShips({ 4: [], 3: [], 2: [], 1: [] });
-          setboardShip({});
+          dispatch({
+            type:ACTIONS.STATICSHIPS,
+            payload:{
+              data:{
+                staticShips: { 4: [], 3: [], 2: [], 1: [] }
+              }
+            }
+          });
+          dispatch({
+            type:ACTIONS.BOARDSHIPS,
+            payload:{
+              data:{
+                boardShip:{}
+              }
+            }
+          });
           mainObj=gameData.randomizer(staticShipsarr);
-          setboardShip(mainObj);
+          dispatch({
+            type:ACTIONS.BOARDSHIPS,
+            payload:{
+              data:{
+                boardShip:mainObj
+              }
+            }
+          });
         }, 0);
       }}
     >

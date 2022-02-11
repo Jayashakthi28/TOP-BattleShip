@@ -1,14 +1,14 @@
 import React, { useContext } from "react";
 import Grid from "./Grid";
 import Ship from "./Ship";
-import { shipData } from "./Main";
+import { ACTIONS, shipData } from "./Main";
 import { gameData } from "../../gameData";
 
 export default function Box() {
   const box = [];
   const shiparr = [];
-  const { boardShip, setboardShip, setstaticShips, currShip } =
-    useContext(shipData);
+  const {state,dispatch}=useContext(shipData);
+  const {boardShip,currShip}=state;
   for (let i = 0; i < 10; i++) {
     box.push([]);
     for (let j = 0; j < 10; j++) {
@@ -32,7 +32,7 @@ export default function Box() {
         dragLeave(e, currShip);
       }}
       onDrop={(e) => {
-        dragDrop(e, currShip, setboardShip, setstaticShips);
+        dragDrop(e,state,dispatch);
       }}
     >
       {box.map((k, i) => {
@@ -150,7 +150,8 @@ function dragLeave(e, currShip) {
   unhighlighter(x, y, r, size, type);
 }
 
-function dragDrop(e, currShip, setBoardship, setstaticShip) {
+function dragDrop(e,state,dispatch) {
+  const {currShip}=state;
   const name = currShip.name;
   const size = +currShip.size;
   let [x, y] = e.target.id.split("");
@@ -158,10 +159,13 @@ function dragDrop(e, currShip, setBoardship, setstaticShip) {
   [x, y, r] = coordinatesFinder(x, y, size, currShip.type);
   let res = gameData.setShipinBoard(x, y, r, currShip.type);
   if (!res) return;
-  setstaticShip((prev) => {
-    let data = prev;
-    data[size] = data[size].filter((t) => t.name !== name);
-    return data;
+  let data = {...state.staticShips};
+  data[size] = data[size].filter((t) => t.name !== name);
+  dispatch({
+    type:ACTIONS.STATICSHIPS,
+    payload:{
+      data:{staticShips:data}
+    }
   });
   const shipData = {
     index: [x, y, r],
@@ -171,7 +175,12 @@ function dragDrop(e, currShip, setBoardship, setstaticShip) {
   };
   gameData.setShipObjinBoard(shipData, name);
   gameData.updateBoard();
-  setBoardship(gameData.getBoardShips());
+  dispatch({
+    type:ACTIONS.BOARDSHIPS,
+    payload:{
+      data:{boardShip:gameData.getBoardShips()}
+    }
+  })
   //removes all highlighted boxes
   document.querySelectorAll(".hover").forEach((t) => {
     t.classList.remove("hover");

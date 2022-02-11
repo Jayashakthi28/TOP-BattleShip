@@ -1,5 +1,5 @@
 import React, { useContext, useRef } from "react";
-import { shipData } from "./Main";
+import { ACTIONS, shipData } from "./Main";
 import Grid from "./Grid";
 import { gameData } from "../../gameData";
 
@@ -9,7 +9,7 @@ export default function Ship({ data }) {
   const type = data.type;
   const ref = useRef();
   let className = type === "vertical" ? "column ship " : "ship ";
-  const { setboardShip, setstaticShips, setcurrShip } = useContext(shipData);
+  const {state,dispatch} = useContext(shipData);
   if (gameData.getBoardShips()[name]) {
     className += "absolute";
   }
@@ -19,13 +19,13 @@ export default function Ship({ data }) {
       ref={ref}
       draggable="true"
       onDragStart={(e) => {
-        dragStart(e, setcurrShip, data);
+        dragStart(e,data,dispatch);
       }}
       onDragEnd={(e) => {
-        dragEnd(e, setcurrShip);
+        dragEnd(e,dispatch);
       }}
       onClick={(e) => {
-        typeChanger(e, data, setstaticShips, setboardShip, ref);
+        typeChanger(e, data,state,dispatch,ref);
       }}
     >
       {[...Array(num)].map((k, i) => (
@@ -35,7 +35,7 @@ export default function Ship({ data }) {
   );
 }
 
-function typeChanger(e, data, setstaticShips, setBoardship, ref) {
+function typeChanger(e, data, state,dispatch, ref) {
   if (gameData.getBoardShips()[data.name]) {
     let shipData = gameData.getBoardShips()[data.name];
     let [x, y, r] = shipData.index;
@@ -48,20 +48,24 @@ function typeChanger(e, data, setstaticShips, setBoardship, ref) {
     y = x + diff;
     if (gameData.setShipinBoard(+x, +y, +r, type)) {
       let newShipObj = {};
-      setBoardship((prev) => {
-        let temp = { ...prev };
-        temp[data.name] = { ...temp[data.name], type, index: [x, y, r] };
-        newShipObj = temp[data.name];
-        gameData.setShipObjinBoard(newShipObj, data.name);
-        return temp;
+      let temp = { ...state.boardShip };
+      temp[data.name] = { ...temp[data.name], type, index: [x, y, r] };
+      newShipObj = temp[data.name];
+      gameData.setShipObjinBoard(newShipObj, data.name);
+      dispatch({
+        type:ACTIONS.BOARDSHIPS,
+        payload:{
+          data:{
+            boardShip:temp
+          }
+        }
       });
     } else {
       let [x, y, r] = shipData.index;
       gameData.setShipinBoard(x, y, r, shipData.type);
     }
   } else {
-    setstaticShips((prev) => {
-      let currData = { ...prev };
+      let currData = { ...state.staticShips };
       currData[data.size] = currData[data.size].map((t) => {
         if (t.name === data.name) {
           const type = t.type === "horizontal" ? "vertical" : "horizontal";
@@ -70,12 +74,18 @@ function typeChanger(e, data, setstaticShips, setBoardship, ref) {
           return t;
         }
       });
-      return currData;
-    });
+      dispatch({
+        type:ACTIONS.STATICSHIPS,
+        payload:{
+          data:{
+            staticShips:currData
+          }
+        }
+      })
   }
 }
 
-function dragStart(e, setcurrShip, data) {
+function dragStart(e,data,dispatch) {
   let type, name, size;
   name = data.name;
   size = data.size;
@@ -93,12 +103,26 @@ function dragStart(e, setcurrShip, data) {
       shipObj.type
     );
   }
-  setcurrShip({ name, size, type });
+  dispatch({
+    type:ACTIONS.CURRSHIP,
+    payload:{
+      data:{
+        currShip:{name,type,size}
+      }
+    }
+  })
   setTimeout(() => e.target.classList.add("none"), 0);
 }
 
-function dragEnd(e, setcurrShip) {
-  setcurrShip(null);
+function dragEnd(e,dispatch) {
+  dispatch({
+    type:ACTIONS.CURRSHIP,
+    payload:{
+      data:{
+        currship:null
+      }
+    }
+  })
   e.target.classList.remove("none");
   document.querySelectorAll(".hover").forEach((t) => {
     t.classList.remove("hover");

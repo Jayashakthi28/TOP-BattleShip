@@ -3,7 +3,8 @@ import { useContext } from "react";
 import { shipData } from "./Main";
 
 export default function Shipcont() {
-  const { staticShips } = useContext(shipData);
+  const { state } = useContext(shipData);
+  const staticShips=state.staticShips;
   const staticShiparr = [];
   for (let key in staticShips) {
     staticShiparr.push(staticShips[key]);
