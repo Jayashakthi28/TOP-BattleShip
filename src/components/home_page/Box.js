@@ -7,7 +7,7 @@ import { gameData } from "../../gameData";
 export default function Box() {
   const box = [];
   const shiparr = [];
-  const {state,dispatch}=useContext(shipData);
+  const {state,dispatch,gameStart}=useContext(shipData);
   const {boardShip,currShip}=state;
   for (let i = 0; i < 10; i++) {
     box.push([]);
@@ -23,16 +23,16 @@ export default function Box() {
     <div
       className="box box-left"
       onDragEnter={(e) => {
-        dragEnter(e, currShip);
+        !gameStart&&dragEnter(e, currShip);
       }}
       onDragOver={(e) => {
-        dragEnter(e, currShip);
+        !gameStart&&dragEnter(e, currShip);
       }}
       onDragLeave={(e) => {
-        dragLeave(e, currShip);
+        !gameStart&&dragLeave(e, currShip);
       }}
       onDrop={(e) => {
-        dragDrop(e,state,dispatch);
+        !gameStart&&dragDrop(e,state,dispatch);
       }}
     >
       {box.map((k, i) => {
