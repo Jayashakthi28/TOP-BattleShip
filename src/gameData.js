@@ -25,8 +25,11 @@ const game = () => {
     return boardShips[shipname] ? true : false;
   };
   const checkPlacement = (x, y, r, type) => {
-    if (x < 0 || y > 9) return false;
+    if (x < 0 || y > 9 || isNaN(x) || isNaN(y)) return false;
     if (type === "horizontal") {
+      if(board[r][x].isPlaced){
+        return false;
+      }
       for (let j = x - 1; j <= y + 1; j++) {
         if (j <= 9) {
           if (j >= 0 && board[r][j].isPlaced) {
@@ -43,6 +46,9 @@ const game = () => {
       return true;
     }
     if (type === "vertical") {
+      if(board[x][r].isPlaced){
+        return false;
+      }
       for (let j = x - 1; j <= y + 1; j++) {
         if (j <= 9) {
           if (j >= 0 && board[j][r].isPlaced) {
