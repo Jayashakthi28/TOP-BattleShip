@@ -9,7 +9,7 @@ export default function Ship({ data }) {
   const type = data.type;
   const ref = useRef();
   let className = type === "vertical" ? "column ship " : "ship ";
-  const {state,dispatch} = useContext(shipData);
+  const {state,dispatch,gamestart} = useContext(shipData);
   if (gameData.getBoardShips()[name]) {
     className += "absolute";
   }
@@ -19,13 +19,13 @@ export default function Ship({ data }) {
       ref={ref}
       draggable="true"
       onDragStart={(e) => {
-        dragStart(e,data,dispatch);
+        !gamestart && dragStart(e,data,dispatch);
       }}
       onDragEnd={(e) => {
-        dragEnd(e,dispatch);
+        !gamestart && dragEnd(e,dispatch);
       }}
       onClick={(e) => {
-        typeChanger(e, data,state,dispatch,ref);
+        !gamestart && typeChanger(e, data,state,dispatch,ref);
       }}
     >
       {[...Array(num)].map((k, i) => (

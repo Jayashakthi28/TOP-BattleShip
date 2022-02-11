@@ -152,3 +152,4 @@ const game = () => {
 };
 
 export const gameData = game();
+export const computer= game();

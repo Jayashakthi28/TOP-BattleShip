@@ -57,6 +57,10 @@ body {
   box-shadow: -16px 16px 8px 2px #000000;
 }
 
+.box-right{
+  box-shadow: 16px 16px 8px 2px #000000;
+}
+
 .wrapper {
   width: 100%;
   @include flex($jusCnt: space-evenly);
@@ -111,6 +115,19 @@ body {
   svg {
     margin-left: 0.3rem;
     animation: blink 2s ease infinite;
+  }
+}
+
+.menu{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  div{
+    font-size: 1.2rem;
+    margin: 1rem;
+    font-weight: bold;
+    cursor: pointer;
   }
 }
 
