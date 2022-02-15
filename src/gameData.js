@@ -11,7 +11,7 @@ const game = () => {
     for (let i = 0; i < 10; i++) {
       board.push([]);
       for (let j = 0; j < 10; j++) {
-        board[i].push({ isHit: false, isPlaced: false });
+        board[i].push({ isHit: false,isPlaced: false,shipName:null});
       }
     }
   };
@@ -69,13 +69,18 @@ const game = () => {
   const setShipObjinBoard = (shipDatas, shipName) => {
     boardShips[shipName] = shipDatas;
   };
-  const setShipinBoard = (x, y, r, type) => {
+  const setShipinBoard = (x, y, r, type,name) => {
     if (y < x) return false;
     if (checkPlacement(x, y, r, type)) {
       for (let j = x; j <= y; j++) {
-        type === "horizontal"
-          ? (board[r][j].isPlaced = true)
-          : (board[j][r].isPlaced = true);
+        if(type === "horizontal"){
+          board[r][j].isPlaced = true;
+          board[r][j].shipName=name;
+        }
+        else{
+          board[j][r].isPlaced = true;
+          board[j][r].shipName=name;
+        }
       }
       return true;
     }
@@ -88,15 +93,21 @@ const game = () => {
         +boardShips[key].index[0],
         +boardShips[key].index[1],
         +boardShips[key].index[2],
-        boardShips[key].type
+        boardShips[key].type,
+        boardShips[key].name
       );
     }
   };
   const removeShipfromBoard = (x, y, r, type) => {
     for (let j = x; j <= y; j++) {
-      type === "horizontal"
-        ? (board[r][j].isPlaced = false)
-        : (board[j][r].isPlaced = false);
+      if(type === "horizontal"){
+        board[r][j].isPlaced = false;
+        board[r][j].shipName=null;
+      }
+      else{
+        board[j][r].isPlaced = false;
+        board[j][r].shipName=null;
+      }
     }
   };
   const randomizer = (staticShipsarr) => {
@@ -127,7 +138,7 @@ const game = () => {
           index: [x, y, r],
           size: d.size,
         };
-        booler = setShipinBoard(x, y, r, type);
+        booler = setShipinBoard(x, y, r, type,d.name);
       }
       if (len < 500) {
         obj = {
@@ -142,6 +153,62 @@ const game = () => {
     });
     return mainObj;
   };
+  const setHit=(i,j,bool)=>{
+    if(isNaN(i) || isNaN(j)) return;
+    if(!(i>=0 && i<=9 && j>=0 && j<=9)) return;
+    if(board[i][j].isHit) return;
+    board[i][j].isHit=bool;
+    if(board[i][j].isPlaced){
+      if(i-1>=0 && j-1>=0){
+        board[i-1][j-1].isHit=true;
+      }
+      if(i+1<=9 && j-1>=0){
+        board[i+1][j-1].isHit=true;
+      }
+      if(i-1>=0 && j+1<=9){
+        board[i-1][j+1].isHit=true;
+      }
+      if(i+1<=9 && j+1<=9){
+        board[i+1][j+1].isHit=true;
+      }
+      boardShips[board[i][j].shipName].size--;
+    }
+    if(board[i][j].shipName && boardShips[board[i][j].shipName].size===0){
+      const type=boardShips[board[i][j].shipName].type;
+      let [x,y,r]=boardShips[board[i][j].shipName].index;
+      if (type === "horizontal") {
+        for (let j = x - 1; j <= y + 1; j++) {
+          if (j <= 9) {
+            if (j >= 0) {
+              board[r][j].isHit=true;
+            }
+            if (j >= 0 && r + 1 <= 9) {
+              board[r+1][j].isHit=true;
+            }
+            if (j >= 0 && r - 1 >= 0) {
+              board[r-1][j].isHit=true;
+            }
+          }
+        }
+      }
+      if (type === "vertical") {
+        for (let j = x - 1; j <= y + 1; j++) {
+          if (j <= 9) {
+            if (j >= 0) {
+              board[j][r].isHit=true;
+            }
+            if (j >= 0 && r + 1 <= 9) {
+              board[j][r+1].isHit=true;
+            }
+            if (j >= 0 && r - 1 >= 0) {
+              board[j][r-1].isHit=true;
+            }
+          }
+        }
+      }
+    }
+    return true;
+  }
   initializeBoard();
   return {
     getBoard,
@@ -153,7 +220,8 @@ const game = () => {
     checkBoardShips,
     checkPlacement,
     flushData,
-    randomizer
+    randomizer,
+    setHit
   };
 };
 

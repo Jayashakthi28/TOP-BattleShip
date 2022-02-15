@@ -162,3 +162,15 @@ body {
 .none {
   display: none !important;
 }
+
+.hit{
+  background-image: url(./assets/spark.svg);
+  background-position: center;
+  background-size: 50px 50px;
+}
+
+.sunk{
+  background-image: url(./assets/Dot.svg);
+  background-position: center;
+  background-size: 50px 50px;
+}

@@ -4,7 +4,6 @@ import { ComputerBox } from "./ComputerBox";
 import { Randomise } from "./Randomise";
 import Shipcont from "./ShipCont";
 import { StartGame } from "./StartGame";
-import sword from "../../assets/sword.svg";
 export const shipData = React.createContext(null);
 
 export const ACTIONS = {
@@ -53,8 +52,9 @@ export default function Main() {
     },
   });
   const [gameStart, setgameStart] = useState(false);
+  const [computerBoard,setcomputerBoard]=useState([]);
   const { staticShips } = state;
-
+  console.log("rendering");
   const shipRender =
     staticShips[1].length === 0 &&
     staticShips[2].length === 0 &&
@@ -67,6 +67,8 @@ export default function Main() {
         dispatch,
         gameStart,
         setgameStart,
+        computerBoard,
+        setcomputerBoard
       }}
     >
       <div className="Main-cont">
@@ -184,7 +186,7 @@ export default function Main() {
               />
             </svg>
           ) : null}
-          {gameStart ? <ComputerBox /> : null}
+          {gameStart ? <ComputerBox/> : null}
           {shipRender ? null : <Shipcont />}
         </div>
       </div>

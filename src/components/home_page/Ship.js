@@ -46,7 +46,7 @@ function typeChanger(e, data, state,dispatch, ref) {
     r = x;
     x = temp;
     y = x + diff;
-    if (gameData.setShipinBoard(+x, +y, +r, type)) {
+    if (gameData.setShipinBoard(+x, +y, +r, type,data.name)) {
       let newShipObj = {};
       let temp = { ...state.boardShip };
       temp[data.name] = { ...temp[data.name], type, index: [x, y, r] };
@@ -62,7 +62,7 @@ function typeChanger(e, data, state,dispatch, ref) {
       });
     } else {
       let [x, y, r] = shipData.index;
-      gameData.setShipinBoard(x, y, r, shipData.type);
+      gameData.setShipinBoard(x, y, r, shipData.type,data.name);
     }
   } else {
       let currData = { ...state.staticShips };

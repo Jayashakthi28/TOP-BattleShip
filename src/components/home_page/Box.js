@@ -157,7 +157,7 @@ function dragDrop(e,state,dispatch) {
   let [x, y] = e.target.id.split("");
   let r;
   [x, y, r] = coordinatesFinder(x, y, size, currShip.type);
-  let res = gameData.setShipinBoard(x, y, r, currShip.type);
+  let res = gameData.setShipinBoard(x, y, r, currShip.type,name);
   if (!res) return;
   let data = {...state.staticShips};
   data[size] = data[size].filter((t) => t.name !== name);
