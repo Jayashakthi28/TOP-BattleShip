@@ -1,15 +1,19 @@
 import React, { useReducer, useState } from "react";
+import { computer, gameData } from "../../gameData";
 import Box from "./Box";
 import { ComputerBox } from "./ComputerBox";
+import { Lifebox } from "./Lifebox";
 import { Randomise } from "./Randomise";
 import Shipcont from "./ShipCont";
 import { StartGame } from "./StartGame";
+import { Userbox } from "./Userbox";
 export const shipData = React.createContext(null);
 
 export const ACTIONS = {
   BOARDSHIPS: "boardShip",
   CURRSHIP: "currShip",
   STATICSHIPS: "staticShips",
+  TOGGLER:"toggler"
 };
 
 function reducer(state, action) {
@@ -23,6 +27,9 @@ function reducer(state, action) {
     case ACTIONS.STATICSHIPS:
       const { staticShips } = action.payload.data;
       return { ...state, staticShips };
+    case ACTIONS.TOGGLER:
+      const {toggler}=action.payload.data;
+      return {...state,toggler};
     default:
       return state;
   }
@@ -50,16 +57,22 @@ export default function Main() {
         { name: "doge_4", size: 1, type: "horizontal" },
       ],
     },
+    toggler:true
   });
   const [gameStart, setgameStart] = useState(false);
   const [computerBoard,setcomputerBoard]=useState([]);
   const { staticShips } = state;
-  console.log("rendering");
   const shipRender =
     staticShips[1].length === 0 &&
     staticShips[2].length === 0 &&
     staticShips[3].length === 0 &&
     staticShips[4].length === 0;
+  if(gameData.checkWinner() && gameStart){
+    console.log("Computer wins")
+  }
+  else if(computer.checkWinner() && gameStart){
+    console.log("User wins");
+  }
   return (
     <shipData.Provider
       value={{
@@ -79,9 +92,11 @@ export default function Main() {
               <Randomise />
             </div>
           ) : null}
-          <Box />
+          {gameStart?<Lifebox user={"bot"} className={"animate__animated animate__backInLeft"}/>:null}
+          {gameStart?<Userbox/>:<Box />}
           {gameStart ? (
             <svg
+              className="animate__animated animate__backInDown"
               width="156"
               height="156"
               viewBox="0 0 156 156"
@@ -187,6 +202,7 @@ export default function Main() {
             </svg>
           ) : null}
           {gameStart ? <ComputerBox/> : null}
+          {gameStart?<Lifebox user={"user"} className={"animate__animated animate__backInRight"}/>:null}
           {shipRender ? null : <Shipcont />}
         </div>
       </div>
