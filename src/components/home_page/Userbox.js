@@ -1,15 +1,9 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect} from "react";
 import { gameData } from "../../gameData";
 import { ACTIONS, shipData } from "./Main";
 import { BsDot } from "react-icons/bs";
 import { IoMdBoat } from "react-icons/io";
 import "animate.css";
-let coordinatesArr = [];
-for (let i = 0; i < 10; i++) {
-  for (let j = 0; j < 10; j++) {
-    coordinatesArr.push(`${i}${j}`);
-  }
-}
 
 export const Userbox = () => {
   const { state, dispatch, setcomputerBoard, computerBoard } =
@@ -22,7 +16,7 @@ export const Userbox = () => {
   useEffect(() => {
     setTimeout(() => {
       boxHitter(dispatch, setcomputerBoard, toggler);
-    }, 250);
+    }, 1000);
     //eslint-disable-next-line
   }, [computerBoard, toggler]);
   return (
@@ -70,32 +64,65 @@ export const Userbox = () => {
 
 function boxHitter(dispatch, setcomputerBoard, toggler) {
   if (toggler || toggler === null) return;
-  let currCoordinate =
-    coordinatesArr[Math.floor(Math.random() * coordinatesArr.length)];
-  const [x, y] = currCoordinate.split("");
-  const change = gameData.setHit(+x, +y, true);
-  if (change && gameData.getBoard()[+x][+y].isPlaced) {
-    dispatch({
-      type: ACTIONS.TOGGLER,
-      payload: {
-        data: { toggler: false },
-      },
-    });
-  } else if (change) {
-    dispatch({
-      type: ACTIONS.TOGGLER,
-      payload: {
-        data: { toggler: true },
-      },
-    });
-  }
-  coordinatesArr = [];
-  gameData.getBoard().forEach((t, i) => {
-    t.forEach((d, j) => {
-      if (!d.isHit) {
-        coordinatesArr.push(`${i}${j}`);
-      }
-    });
+  // console.log(prevData);
+  // let currCoordinate =(prevData.length===0)?coordinatesArr[Math.floor(Math.random() * coordinatesArr.length)]:prevData[Math.floor(Math.random()*prevData.length)];
+  // let [x, y] = currCoordinate.split("");
+  // x=+x;
+  // y=+y;
+  // const change = gameData.setHit(+x, +y, true);
+  // if (change && gameData.getBoard()[+x][+y].isPlaced) {
+  //   let tempArr=[];
+  //   let boardArr=gameData.getBoard();
+  //   for(let i=0;i<=1;i++){
+  //     if((x+i)<=9&&!boardArr[x+i][y].isHit){
+  //       tempArr.push(`${x+i}${y}`)
+  //     }
+  //     if((x-i)>=0&&!boardArr[x-i][y].isHit){
+  //       tempArr.push(`${x-i}${y}`)
+  //     }
+  //     if((y+i)<=9&&!boardArr[x][y+i].isHit){
+  //       tempArr.push(`${x}${y+i}`)
+  //     }
+  //     if((y-i)>=0&&!boardArr[x][y-i].isHit){
+  //       tempArr.push(`${x}${y-i}`)
+  //     }
+  //   }
+  //   setprevData(tempArr);
+  //   dispatch({
+  //     type: ACTIONS.TOGGLER,
+  //     payload: {
+  //       data: { toggler: false },
+  //     },
+  //   });
+  // } else if (change) {
+  //   if(prevData.length!==0){
+  //     setprevData((t)=>{
+  //       let temp=[...t];
+  //       temp=temp.filter(d=>d!==`${x}${y}`);
+  //       return temp;
+  //     })
+  //   }
+  //   dispatch({
+  //     type: ACTIONS.TOGGLER,
+  //     payload: {
+  //       data: { toggler: true },
+  //     },
+  //   });
+  // }
+  // coordinatesArr = [];
+  // gameData.getBoard().forEach((t, i) => {
+  //   t.forEach((d, j) => {
+  //     if (!d.isHit) {
+  //       coordinatesArr.push(`${i}${j}`);
+  //     }
+  //   });
+  // });
+  let val=gameData.randomHitter();
+  dispatch({
+    type: ACTIONS.TOGGLER,
+    payload: {
+      data: { toggler: val },
+    },
   });
   setcomputerBoard((prev) => {
     return [...prev];
