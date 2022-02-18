@@ -3,7 +3,6 @@ import { computer, gameData } from '../../gameData'
 import {AiFillHeart} from "react-icons/ai"
 export const Lifebox = ({user,className}) => {
   let data=(user==="bot")?(gameData.getBoardShips()):(computer.getBoardShips());
-  let obj={}
   let lifeArr=[];
   let newClassName=className+" lifebox";
   for(let i=0;i<=3;i++){

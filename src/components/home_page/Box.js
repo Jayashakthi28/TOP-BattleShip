@@ -1,4 +1,4 @@
-import React, { useContext, useEffect} from "react";
+import React, { useContext} from "react";
 import Grid from "./Grid";
 import Ship from "./Ship";
 import { ACTIONS, shipData } from "./Main";
@@ -13,8 +13,8 @@ for (let i = 0; i < 10; i++) {
 export default function Box() {
   const box = [];
   const shiparr = [];
-  const {state,dispatch,gameStart,setcomputerBoard,computerBoard}=useContext(shipData);
-  const {boardShip,currShip,toggler}=state;
+  const {state,dispatch,gameStart}=useContext(shipData);
+  const {boardShip,currShip}=state;
   for (let i = 0; i < 10; i++) {
     box.push([]);
     for (let j = 0; j < 10; j++) {

@@ -12,20 +12,8 @@ export const ComputerBox = () => {
       box[i].push(j);
     }
   }
-  const computerBoxes = [];
   const { setcomputerBoard, state, dispatch } = useContext(shipData);
-  // const computerShips=computer.getBoardShips();
-  // for(let key in computerShips){
-  //   let data=computerShips[key];
-  //   for(let i=data.index[0];i<=data.index[1];i++){
-  //     if(data.type==="horizontal"){
-  //       computerBoxes.push(`${data.index[2]}${i}`);
-  //     }
-  //     if(data.type==="vertical"){
-  //       computerBoxes.push(`${i}${data.index[2]}`);
-  //     }
-  //   }
-  // }
+
   let className=(state.toggler===true)?"box box-right focus animate__animated animate__backInRight":"box box-right animate__animated animate__backInRight";
   return (
     <div

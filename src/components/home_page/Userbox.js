@@ -23,6 +23,7 @@ export const Userbox = () => {
     setTimeout(() => {
       boxHitter(dispatch, setcomputerBoard, toggler);
     }, 250);
+    //eslint-disable-next-line
   }, [computerBoard, toggler]);
   return (
     <div className={className}>
