@@ -1,6 +1,13 @@
 const game = () => {
   let board = [];
   let boardShips = {};
+  let coordinatesArr=[];
+  let prevData=[];
+  for (let i = 0; i < 10; i++) {
+    for (let j = 0; j < 10; j++) {
+      coordinatesArr.push(`${i}${j}`);
+    }
+  }
   const flushData = () => {
     board = [];
     initializeBoard();
@@ -154,9 +161,9 @@ const game = () => {
     return mainObj;
   };
   const setHit=(i,j,bool)=>{
-    if(isNaN(i) || isNaN(j)) return;
-    if(!(i>=0 && i<=9 && j>=0 && j<=9)) return;
-    if(board[i][j].isHit) return;
+    if(isNaN(i) || isNaN(j)) return false;
+    if(!(i>=0 && i<=9 && j>=0 && j<=9)) return false;
+    if(board[i][j].isHit) return false;
     board[i][j].isHit=bool;
     if(board[i][j].isPlaced){
       if(i-1>=0 && j-1>=0){
@@ -215,6 +222,55 @@ const game = () => {
     }
     return true;
   }
+  const randomHitter=()=>{
+  let returnVal=true;
+  console.log(prevData);
+  let currCoordinate =(prevData.length===0)?coordinatesArr[Math.floor(Math.random() * coordinatesArr.length)]:prevData[Math.floor(Math.random()*prevData.length)];
+  let [x, y] = currCoordinate.split("");
+  x=+x;
+  y=+y;
+  const change = setHit(+x, +y, true);
+  if (change && getBoard()[+x][+y].isPlaced) {
+    let tempArr=[...prevData];
+    let boardArr=getBoard();
+    for(let i=0;i<=1;i++){
+      if((x+i)<=9&&!boardArr[x+i][y].isHit){
+        tempArr.push(`${x+i}${y}`)
+      }
+      if((x-i)>=0&&!boardArr[x-i][y].isHit){
+        tempArr.push(`${x-i}${y}`)
+      }
+      if((y+i)<=9&&!boardArr[x][y+i].isHit){
+        tempArr.push(`${x}${y+i}`)
+      }
+      if((y-i)>=0&&!boardArr[x][y-i].isHit){
+        tempArr.push(`${x}${y-i}`)
+      }
+    }
+    tempArr=tempArr.filter((t)=>{
+      let [i,j]=t.split('');
+      return !board[i][j].isHit;
+    })
+    prevData=[...new Set(tempArr)];
+    returnVal=false;
+  } else if (change) {
+    if(prevData.length!==0){
+        let temp=[...prevData];
+        temp=temp.filter(d=>d!==`${x}${y}`);
+        prevData=temp;
+    }
+    returnVal=true;
+  }
+  coordinatesArr = [];
+  getBoard().forEach((t, i) => {
+    t.forEach((d, j) => {
+      if (!d.isHit) {
+        coordinatesArr.push(`${i}${j}`);
+      }
+    });
+  });
+  return returnVal;
+  }
   initializeBoard();
   return {
     getBoard,
@@ -228,7 +284,8 @@ const game = () => {
     flushData,
     randomizer,
     setHit,
-    checkWinner
+    checkWinner,
+    randomHitter
   };
 };
 
