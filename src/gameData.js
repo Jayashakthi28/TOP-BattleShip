@@ -209,6 +209,12 @@ const game = () => {
     }
     return true;
   }
+  const checkWinner=()=>{
+    for(let key in boardShips){
+      if(boardShips[key].size>0) return false;
+    }
+    return true;
+  }
   initializeBoard();
   return {
     getBoard,
@@ -221,7 +227,8 @@ const game = () => {
     checkPlacement,
     flushData,
     randomizer,
-    setHit
+    setHit,
+    checkWinner
   };
 };
 
