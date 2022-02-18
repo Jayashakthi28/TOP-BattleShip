@@ -18,6 +18,7 @@
   align-items: $alitm;
 }
 
+
 *,
 *::before,
 *::after {
@@ -33,6 +34,7 @@
 body {
   // background: radial-gradient(16.65% 34.47% at 50% 50%, #FFFFFF 0%, #FBFBFB 0.01%, #fff0ba 100%);
   background-color: #fff0ba;
+  overflow: hidden;
 }
 
 .box {
@@ -57,8 +59,19 @@ body {
   box-shadow: -16px 16px 8px 2px #000000;
 }
 
-.box-right{
+.box-right {
   box-shadow: 16px 16px 8px 2px #000000;
+  .grid{
+    cursor: pointer;
+    transition: all 0.2s ease;
+    height: 50px;
+    width: 50px;
+    border: 0;
+    outline: 0;
+  }
+  .grid:hover{
+    background-color: rgb(214, 255, 137);
+  }
 }
 
 .wrapper {
@@ -118,12 +131,12 @@ body {
   }
 }
 
-.menu{
+.menu {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  div{
+  div {
     font-size: 1.2rem;
     margin: 1rem;
     font-weight: bold;
@@ -147,6 +160,7 @@ body {
   position: absolute;
   z-index: 2;
   background-color: #fff0ba;
+  background-color: transparent;
 }
 
 .column {
@@ -163,14 +177,85 @@ body {
   display: none !important;
 }
 
-.hit{
+.hit {
   background-image: url(./assets/spark.svg);
   background-position: center;
   background-size: 50px 50px;
 }
 
-.sunk{
+.sunk {
   background-image: url(./assets/Dot.svg);
   background-position: center;
   background-size: 50px 50px;
 }
+
+.shiper {
+  background-color: blue !important;
+}
+
+.hitter {
+  background-color: red !important;
+}
+
+.focus{
+  box-shadow: 16px 16px 8px 2px #ff0000;
+}
+
+.focus-right{
+  box-shadow: -16px 16px 8px 2px #ff0000;
+}
+
+.lifebox{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: 120px;
+}
+
+// .focus {
+//   -webkit-animation: color-change-2x 1s ease
+//     infinite alternate both;
+//   animation: color-change-2x 1s ease infinite
+//     alternate both;
+// }
+
+// .focus-right {
+//   -webkit-animation: color-change-2x-right 1s ease
+//     infinite alternate both;
+//   animation: color-change-2x-right 1s ease infinite
+//     alternate both;
+// }
+
+// @-webkit-keyframes color-change-2x {
+//   0% {
+//     box-shadow: 16px 16px 8px 2px #000000;
+//   }
+//   100% {
+//     box-shadow: 16px 16px 8px 2px #525252;
+//   }
+// }
+// @keyframes color-change-2x {
+//   0% {
+//     box-shadow: 16px 16px 8px 2px #000000;
+//   }
+//   100% {
+//     box-shadow: 16px 16px 8px 2px #525252;
+//   }
+// }
+
+// @-webkit-keyframes color-change-2x-right {
+//   0% {
+//     box-shadow: -16px 16px 8px 2px #000000;
+//   }
+//   100% {
+//     box-shadow: -16px 16px 8px 2px #525252;
+//   }
+// }
+// @keyframes color-change-2x-right {
+//   0% {
+//     box-shadow: -16px 16px 8px 2px #000000;
+//   }
+//   100% {
+//     box-shadow: -16px 16px 8px 2px #525252;
+//   }
+// }
