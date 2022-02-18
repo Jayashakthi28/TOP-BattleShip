@@ -1,14 +1,20 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect} from "react";
 import Grid from "./Grid";
 import Ship from "./Ship";
 import { ACTIONS, shipData } from "./Main";
 import { gameData } from "../../gameData";
 
+let coordinatesArr=[];
+for (let i = 0; i < 10; i++) {
+  for (let j = 0; j < 10; j++) {
+    coordinatesArr.push(`${i}${j}`);
+  }
+}
 export default function Box() {
   const box = [];
   const shiparr = [];
-  const {state,dispatch,gameStart}=useContext(shipData);
-  const {boardShip,currShip}=state;
+  const {state,dispatch,gameStart,setcomputerBoard,computerBoard}=useContext(shipData);
+  const {boardShip,currShip,toggler}=state;
   for (let i = 0; i < 10; i++) {
     box.push([]);
     for (let j = 0; j < 10; j++) {
@@ -189,3 +195,4 @@ function dragDrop(e,state,dispatch) {
     t.classList.remove("blocker");
   });
 }
+
