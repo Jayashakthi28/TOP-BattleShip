@@ -1,4 +1,4 @@
-const game = () => {
+export const game = () => {
   let board = [];
   let boardShips = {};
   let coordinatesArr=[];

@@ -13,7 +13,9 @@ export const ACTIONS = {
   BOARDSHIPS: "boardShip",
   CURRSHIP: "currShip",
   STATICSHIPS: "staticShips",
-  TOGGLER:"toggler"
+  TOGGLER:"toggler",
+  GAMESTART:"gameStart",
+  COMPUTERBOARD:"computerBoard"
 };
 
 function reducer(state, action) {
@@ -30,6 +32,12 @@ function reducer(state, action) {
     case ACTIONS.TOGGLER:
       const {toggler}=action.payload.data;
       return {...state,toggler};
+    case ACTIONS.GAMESTART:
+      const {gameStart}=action.payload.data;
+      return {...state,gameStart};
+    case ACTIONS.COMPUTERBOARD:
+      const {computerBoard}=action.payload.data;
+      return {...state,computerBoard}
     default:
       return state;
   }
@@ -57,11 +65,13 @@ export default function Main() {
         { name: "doge_4", size: 1, type: "horizontal" },
       ],
     },
-    toggler:true
+    toggler:true,
+    gameStart:false,
+    computerBoard:[]
   });
-  const [gameStart, setgameStart] = useState(false);
-  const [computerBoard,setcomputerBoard]=useState([]);
-  const { staticShips } = state;
+  // const [gameStart, setgameStart] = useState(false);
+  // const [computerBoard,setcomputerBoard]=useState([]);
+  const { staticShips,gameStart } = state;
   const shipRender =
     staticShips[1].length === 0 &&
     staticShips[2].length === 0 &&
@@ -77,11 +87,7 @@ export default function Main() {
     <shipData.Provider
       value={{
         state,
-        dispatch,
-        gameStart,
-        setgameStart,
-        computerBoard,
-        setcomputerBoard
+        dispatch
       }}
     >
       <div className="Main-cont">

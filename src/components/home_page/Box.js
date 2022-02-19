@@ -13,8 +13,8 @@ for (let i = 0; i < 10; i++) {
 export default function Box() {
   const box = [];
   const shiparr = [];
-  const {state,dispatch,gameStart}=useContext(shipData);
-  const {boardShip,currShip}=state;
+  const {state,dispatch}=useContext(shipData);
+  const {boardShip,currShip,gameStart}=state;
   for (let i = 0; i < 10; i++) {
     box.push([]);
     for (let j = 0; j < 10; j++) {

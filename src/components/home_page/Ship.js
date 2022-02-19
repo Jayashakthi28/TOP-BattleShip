@@ -9,7 +9,8 @@ export default function Ship({ data }) {
   const type = data.type;
   const ref = useRef();
   let className = type === "vertical" ? "column ship " : "ship ";
-  const {state,dispatch,gameStart} = useContext(shipData);
+  const {state,dispatch} = useContext(shipData);
+  const {gameStart}=state;
   if (gameData.getBoardShips()[name]) {
     className += "absolute";
   }

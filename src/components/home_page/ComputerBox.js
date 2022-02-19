@@ -12,7 +12,7 @@ export const ComputerBox = () => {
       box[i].push(j);
     }
   }
-  const { setcomputerBoard, state, dispatch } = useContext(shipData);
+  const { state, dispatch } = useContext(shipData);
 
   let className=(state.toggler===true)?"box box-right focus animate__animated animate__backInRight":"box box-right animate__animated animate__backInRight";
   return (
@@ -41,8 +41,16 @@ export const ComputerBox = () => {
             });
           },250);
         }
-        setcomputerBoard((prev) => {
-          return [...prev];
+        // setcomputerBoard((prev) => {
+        //   return [...prev];
+        // });
+        dispatch({
+          type:ACTIONS.COMPUTERBOARD,
+          payload:{
+            data:{
+              computerBoard:[]
+            }
+          }
         });
       }}
     >

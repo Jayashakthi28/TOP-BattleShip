@@ -1,16 +1,21 @@
 import React, { useContext } from 'react'
-import { computer, gameData } from '../../gameData';
-import { shipData } from './Main'
+import { computer} from '../../gameData';
+import { ACTIONS, shipData } from './Main'
 import { staticShipsarr } from './Randomise';
 
 export const StartGame = () => {
-  const {setgameStart}=useContext(shipData);
+  const {dispatch}=useContext(shipData);
   return (
     <div onClick={()=>{
-        setgameStart(true);
+        dispatch({
+          type:ACTIONS.GAMESTART,
+          payload:{
+            data:{
+              gameStart:true
+            }
+          }
+        })
         computer.randomizer(staticShipsarr);
-        console.log(gameData.getBoard());
-        console.log(computer.getBoard());
     }}>StartGame</div>
   )
 }
