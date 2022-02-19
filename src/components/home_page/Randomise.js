@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { gameData } from "../../gameData";
+import { Players } from "../../Players";
 import { ACTIONS, shipData } from "./Main";
 export const staticShipsarr = [
   { name: "chakra", size: 4, type: "horizontal" },
@@ -36,7 +36,7 @@ export const Randomise = () => {
               },
             },
           });
-          mainObj = gameData.randomizer(staticShipsarr);
+          mainObj = Players.player1.randomizer(staticShipsarr);
           dispatch({
             type: ACTIONS.BOARDSHIPS,
             payload: {

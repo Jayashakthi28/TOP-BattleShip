@@ -1,9 +1,9 @@
 import React, { useContext, useEffect} from "react";
-import { gameData } from "../../gameData";
 import { ACTIONS, shipData } from "./Main";
 import { BsDot } from "react-icons/bs";
 import { IoMdBoat } from "react-icons/io";
 import "animate.css";
+import { Players } from "../../Players";
 
 export const Userbox = () => {
   const { state, dispatch} =
@@ -21,9 +21,9 @@ export const Userbox = () => {
   }, [computerBoard, toggler]);
   return (
     <div className={className}>
-      {gameData.getBoard().map((k, i) => {
-        return gameData.getBoard()[i].map((t, j) => {
-          let data = gameData.getBoard()[i][j];
+      {Players.player1.getBoard().map((k, i) => {
+        return Players.player1.getBoard()[i].map((t, j) => {
+          let data = Players.player1.getBoard()[i][j];
           if (data.isPlaced && data.isHit) {
             return (
               <div key={`${i}${j}`} id={`${i}${j}`} className="grid">
@@ -64,7 +64,7 @@ export const Userbox = () => {
 
 function boxHitter(state,dispatch,toggler) {
   if (toggler || toggler === null) return;
-  let val=gameData.randomHitter();
+  let val=Players.player1.randomHitter();
   dispatch({
     type: ACTIONS.TOGGLER,
     payload: {

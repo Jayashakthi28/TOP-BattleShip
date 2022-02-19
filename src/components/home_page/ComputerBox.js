@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
-import { computer } from "../../gameData";
 import { BsDot } from "react-icons/bs";
 import { IoMdBoat } from "react-icons/io";
+import { Players } from "../../Players";
 import { ACTIONS, shipData } from "./Main";
 
 export const ComputerBox = () => {
@@ -23,8 +23,8 @@ export const ComputerBox = () => {
         let [x, y] = e.target.id.split("");
         x = +x;
         y = +y;
-        const change = computer.setHit(x, y, true);
-        if (change && computer.getBoard()[x][y].isPlaced) {
+        const change = Players.player2.setHit(x, y, true);
+        if (change && Players.player2.getBoard()[x][y].isPlaced) {
           dispatch({
             type: ACTIONS.TOGGLER,
             payload: {
@@ -54,9 +54,9 @@ export const ComputerBox = () => {
         });
       }}
     >
-      {computer.getBoard().map((k, i) => {
-        return computer.getBoard()[i].map((t, j) => {
-          let data = computer.getBoard()[i][j];
+      {Players.player2.getBoard().map((k, i) => {
+        return Players.player2.getBoard()[i].map((t, j) => {
+          let data = Players.player2.getBoard()[i][j];
           if (data.isPlaced && data.isHit) {
             return (
               <div key={`${i}${j}`} id={`${i}${j}`} className="grid">

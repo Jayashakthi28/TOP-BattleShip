@@ -2,7 +2,7 @@ import React, { useContext} from "react";
 import Grid from "./Grid";
 import Ship from "./Ship";
 import { ACTIONS, shipData } from "./Main";
-import { gameData } from "../../gameData";
+import { Players } from "../../Players";
 
 let coordinatesArr=[];
 for (let i = 0; i < 10; i++) {
@@ -140,7 +140,7 @@ function dragEnter(e, currShip) {
   const type = currShip.type;
   let r;
   [x, y, r] = coordinatesFinder(+x, +y, +size, type);
-  if (gameData.checkPlacement(x, y, r, type)) {
+  if (Players.player1.checkPlacement(x, y, r, type)) {
     highlighter(x, y, r, type, true);
   } else {
     highlighter(x, y, r, type, false);
@@ -163,7 +163,7 @@ function dragDrop(e,state,dispatch) {
   let [x, y] = e.target.id.split("");
   let r;
   [x, y, r] = coordinatesFinder(x, y, size, currShip.type);
-  let res = gameData.setShipinBoard(x, y, r, currShip.type,name);
+  let res = Players.player1.setShipinBoard(x, y, r, currShip.type,name);
   if (!res) return;
   let data = {...state.staticShips};
   data[size] = data[size].filter((t) => t.name !== name);
@@ -179,12 +179,12 @@ function dragDrop(e,state,dispatch) {
     size: +size,
     type: currShip.type,
   };
-  gameData.setShipObjinBoard(shipData, name);
-  gameData.updateBoard();
+  Players.player1.setShipObjinBoard(shipData, name);
+  Players.player1.updateBoard();
   dispatch({
     type:ACTIONS.BOARDSHIPS,
     payload:{
-      data:{boardShip:gameData.getBoardShips()}
+      data:{boardShip:Players.player1.getBoardShips()}
     }
   })
   //removes all highlighted boxes

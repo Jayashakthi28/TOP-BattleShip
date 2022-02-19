@@ -1,7 +1,7 @@
 import React, { useContext, useRef } from "react";
 import { ACTIONS, shipData } from "./Main";
 import Grid from "./Grid";
-import { gameData } from "../../gameData";
+import { Players } from "../../Players";
 
 export default function Ship({ data }) {
   const name = data.name;
@@ -11,7 +11,7 @@ export default function Ship({ data }) {
   let className = type === "vertical" ? "column ship " : "ship ";
   const {state,dispatch} = useContext(shipData);
   const {gameStart}=state;
-  if (gameData.getBoardShips()[name]) {
+  if (Players.player1.getBoardShips()[name]) {
     className += "absolute";
   }
   return (
@@ -37,22 +37,22 @@ export default function Ship({ data }) {
 }
 
 function typeChanger(e, data, state,dispatch, ref) {
-  if (gameData.getBoardShips()[data.name]) {
-    let shipData = gameData.getBoardShips()[data.name];
+  if (Players.player1.getBoardShips()[data.name]) {
+    let shipData = Players.player1.getBoardShips()[data.name];
     let [x, y, r] = shipData.index;
     let diff = y - x;
     let type = data.type === "horizontal" ? "vertical" : "horizontal";
-    gameData.removeShipfromBoard(x, y, r, shipData.type);
+    Players.player1.removeShipfromBoard(x, y, r, shipData.type);
     let temp = r;
     r = x;
     x = temp;
     y = x + diff;
-    if (gameData.setShipinBoard(+x, +y, +r, type,data.name)) {
+    if (Players.player1.setShipinBoard(+x, +y, +r, type,data.name)) {
       let newShipObj = {};
       let temp = { ...state.boardShip };
       temp[data.name] = { ...temp[data.name], type, index: [x, y, r] };
       newShipObj = temp[data.name];
-      gameData.setShipObjinBoard(newShipObj, data.name);
+      Players.player1.setShipObjinBoard(newShipObj, data.name);
       dispatch({
         type:ACTIONS.BOARDSHIPS,
         payload:{
@@ -63,7 +63,7 @@ function typeChanger(e, data, state,dispatch, ref) {
       });
     } else {
       let [x, y, r] = shipData.index;
-      gameData.setShipinBoard(x, y, r, shipData.type,data.name);
+      Players.player1.setShipinBoard(x, y, r, shipData.type,data.name);
     }
   } else {
       let currData = { ...state.staticShips };
@@ -95,9 +95,9 @@ function dragStart(e,data,dispatch) {
   } else {
     type = "horizontal";
   }
-  if (gameData.checkBoardShips(name)) {
-    let shipObj = gameData.getBoardShips()[name];
-    gameData.removeShipfromBoard(
+  if (Players.player1.checkBoardShips(name)) {
+    let shipObj = Players.player1.getBoardShips()[name];
+    Players.player1.removeShipfromBoard(
       shipObj.index[0],
       shipObj.index[1],
       shipObj.index[2],
@@ -131,5 +131,5 @@ function dragEnd(e,dispatch) {
   document.querySelectorAll(".blocker").forEach((t) => {
     t.classList.remove("blocker");
   });
-  gameData.updateBoard();
+  Players.player1.updateBoard();
 }
