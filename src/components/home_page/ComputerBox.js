@@ -13,7 +13,18 @@ export const ComputerBox = () => {
     }
   }
   const { state, dispatch } = useContext(shipData);
-
+  // if(Players.checkwinner()){
+  //   setTimeout(() => {
+  //     dispatch({
+  //       type:ACTIONS.GAMEOVER,
+  //       payload:{
+  //         data:{
+  //           gameOver:true
+  //         }
+  //       }
+  //     })
+  //   }, 2000);
+  // }
   let className=(state.toggler===true)?"box box-right focus animate__animated animate__backInRight":"box box-right animate__animated animate__backInRight";
   return (
     <div

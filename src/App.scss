@@ -37,6 +37,13 @@ body {
   overflow: hidden;
 }
 
+.Main-cont{
+  min-height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .box {
   display: grid;
   grid-template-rows: repeat(10, 1fr);
@@ -160,7 +167,6 @@ body {
   position: absolute;
   z-index: 2;
   background-color: #fff0ba;
-  background-color: transparent;
 }
 
 .column {
@@ -210,6 +216,35 @@ body {
   flex-direction: column;
   justify-content: space-evenly;
   width: 120px;
+}
+
+.Gameover{
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  padding: 1rem;
+  height: 300px;
+  margin: auto;
+  box-shadow: 0px 0px 10px 1px rgba(255, 0, 0, 0.188);
+  border-radius: 10px;
+  background-color: whitesmoke;
+  justify-content: space-evenly;
+  align-items: center;
+  h2{
+    font-size: 2rem;
+  }
+  div{
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  button{
+    padding: 0.2rem 0.5rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: wheat;
+    border-radius: 0.2rem;
+  }
 }
 
 // .focus {

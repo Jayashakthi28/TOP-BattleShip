@@ -1,5 +1,6 @@
 import React, { useReducer, useState } from "react";
 import { computer, gameData } from "../../gameData";
+import { Players } from "../../Players";
 import Box from "./Box";
 import { ComputerBox } from "./ComputerBox";
 import { Gameover } from "./Gameover";
@@ -17,6 +18,8 @@ export const ACTIONS = {
   TOGGLER: "toggler",
   GAMESTART: "gameStart",
   COMPUTERBOARD: "computerBoard",
+  GAMEOVER:"gameOver",
+  RESETGAME:"resetGame"
 };
 
 function reducer(state, action) {
@@ -39,6 +42,37 @@ function reducer(state, action) {
     case ACTIONS.COMPUTERBOARD:
       const { computerBoard } = action.payload.data;
       return { ...state, computerBoard };
+    case ACTIONS.GAMEOVER:
+      const {gameOver}=action.payload.data;
+      return {...state,gameOver}
+    case ACTIONS.RESETGAME:
+      const newState={
+        boardShip: {},
+        currShip: {},
+        staticShips: {
+          4: [{ name: "chakra", size: 4, type: "horizontal" }],
+          3: [
+            { name: "vikranth_1", size: 3, type: "horizontal" },
+            { name: "vikranth_2", size: 3, type: "horizontal" },
+          ],
+          2: [
+            { name: "marine_1", size: 2, type: "horizontal" },
+            { name: "marine_2", size: 2, type: "horizontal" },
+            { name: "marine_3", size: 2, type: "horizontal" },
+          ],
+          1: [
+            { name: "doge_1", size: 1, type: "horizontal" },
+            { name: "doge_2", size: 1, type: "horizontal" },
+            { name: "doge_3", size: 1, type: "horizontal" },
+            { name: "doge_4", size: 1, type: "horizontal" },
+          ],
+        },
+        toggler: true,
+        gameStart: false,
+        computerBoard: [],
+        gameOver: false,
+      }
+      return newState;
     default:
       return state;
   }
@@ -71,14 +105,25 @@ export default function Main() {
     computerBoard: [],
     gameOver: false,
   });
-  // const [gameStart, setgameStart] = useState(false);
-  // const [computerBoard,setcomputerBoard]=useState([]);
   const { staticShips, gameStart, gameOver } = state;
   const shipRender =
     staticShips[1].length === 0 &&
     staticShips[2].length === 0 &&
     staticShips[3].length === 0 &&
     staticShips[4].length === 0;
+  console.log(Players.checkwinner());
+  if(gameStart && Players.checkwinner() && gameOver===false){
+      setTimeout(() => {
+        dispatch({
+          type:ACTIONS.GAMEOVER,
+          payload:{
+            data:{
+              gameOver:true
+            }
+          }
+        })
+      }, 500);
+  }
   return (
     <shipData.Provider
       value={{

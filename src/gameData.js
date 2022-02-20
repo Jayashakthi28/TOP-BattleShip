@@ -3,22 +3,22 @@ export const game = () => {
   let boardShips = {};
   let coordinatesArr=[];
   let prevData=[];
-  for (let i = 0; i < 10; i++) {
-    for (let j = 0; j < 10; j++) {
-      coordinatesArr.push(`${i}${j}`);
-    }
-  }
+  let name="player";
   const flushData = () => {
     board = [];
     initializeBoard();
     boardShips = {};
+    name='player';
   };
   const initializeBoard = () => {
     board = [];
+    coordinatesArr=[];
+    prevData=[];
     for (let i = 0; i < 10; i++) {
       board.push([]);
       for (let j = 0; j < 10; j++) {
         board[i].push({ isHit: false,isPlaced: false,shipName:null});
+        coordinatesArr.push(`${i}${j}`);
       }
     }
   };
@@ -285,7 +285,8 @@ export const game = () => {
     randomizer,
     setHit,
     checkWinner,
-    randomHitter
+    randomHitter,
+    name
   };
 };
 
