@@ -1,5 +1,4 @@
-import React, { useReducer, useState } from "react";
-import { computer, gameData } from "../../gameData";
+import React, { useReducer} from "react";
 import { Players } from "../../Players";
 import Box from "./Box";
 import { ComputerBox } from "./ComputerBox";
