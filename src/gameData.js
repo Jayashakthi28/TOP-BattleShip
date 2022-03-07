@@ -222,9 +222,19 @@ export const game = () => {
     }
     return true;
   }
+  const setPrevData=(d)=>{
+    prevData=d;
+  }
   const randomHitter=()=>{
   let returnVal=true;
-  console.log(prevData);
+  if(prevData.length!==0){
+    let temp=[...prevData];
+    temp=temp.filter((t)=>{
+      let [i,j]=t.split('');
+      return !board[i][j].isHit;
+    });
+    prevData=temp;
+  }
   let currCoordinate =(prevData.length===0)?coordinatesArr[Math.floor(Math.random() * coordinatesArr.length)]:prevData[Math.floor(Math.random()*prevData.length)];
   let [x, y] = currCoordinate.split("");
   x=+x;
@@ -275,6 +285,7 @@ export const game = () => {
   return {
     getBoard,
     getBoardShips,
+    prevData,
     setShipObjinBoard,
     setShipinBoard,
     updateBoard,
@@ -286,7 +297,8 @@ export const game = () => {
     setHit,
     checkWinner,
     randomHitter,
-    name
+    name,
+    setPrevData
   };
 };
 
