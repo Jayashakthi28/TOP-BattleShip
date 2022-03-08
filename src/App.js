@@ -1,10 +1,34 @@
 import "./App.scss";
 import Main from "./components/home_page/Main";
 import img from "./assets/ShipImage.svg";
-
+import { MdHelp } from "react-icons/md";
+import {BsGithub} from "react-icons/bs";
+import { Howto } from "./components/home_page/Howto";
+import { Error } from "./components/home_page/Error";
+import { useState } from "react";
+import { Players } from "./Players";
 function App() {
+  const [width,setwidth]=useState(window.innerWidth);
+  window.onresize=()=>{
+    if(width<954 && window.innerWidth>=954){
+      Players.resetGame();
+    }
+    setwidth(window.innerWidth);
+  };
+  console.log(width);
   return (
+    (width>=954)?
     <>
+      <div className="header">
+        <MdHelp size={45} onClick={()=>{
+          let ele=document.querySelector(".howto");
+          if(ele.classList.contains("none")){
+            ele.classList.remove("none");
+          }
+          else{
+            ele.classList.add("none");
+          }
+        }}/>
         <h1 className="heading">
           BattleShip
           <svg
@@ -136,9 +160,14 @@ function App() {
             />
           </svg>
         </h1>
+        <a href="https://github.com/Jayashakthi28/TOP-BattleShip" target="_blank" rel="noreferrer">
+        <BsGithub size={45} color={"black"}/>
+        </a>
+      </div>
+      <Howto/>
       <Main />
-      <img className="ship-img" src={img} alt="" draggable="false"/>
-    </>
+      <img className="ship-img" src={img} alt="" draggable="false" />
+    </>:<Error/>
   );
 }
 
