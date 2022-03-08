@@ -34,7 +34,30 @@
 body {
   // background: radial-gradient(16.65% 34.47% at 50% 50%, #FFFFFF 0%, #FBFBFB 0.01%, #fff0ba 100%);
   background-color: #fff0ba;
-  overflow: hidden;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.howto{
+  position: absolute;
+  left: 0;
+  min-height: 100vh;
+  width: 100vw;
+  background-color: #fff0ba;
+  @include flex($dir:column);
+  z-index: 9;
+  padding-bottom: 5rem;
+  .more-info{
+    margin-top: 1rem;
+    font-size: 1.5rem;
+  }
+}
+
+.header{
+  display: flex;
+  padding: 2rem;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .Main-cont{
@@ -130,8 +153,8 @@ body {
 .heading {
   text-align: center;
   font-size: 2.2rem;
-  padding: 2rem;
-
+  align-self: center;
+  justify-self: center;
   svg {
     margin-left: 0.3rem;
     animation: blink 2s ease infinite;
@@ -149,6 +172,56 @@ body {
     font-weight: bold;
     cursor: pointer;
   }
+}
+
+.section{
+   @include flex($dir:column);
+   border-bottom: 3px dotted black;
+   margin-top: 1rem;
+   h2{
+     font-size: 2rem;
+   }
+  .content{
+    margin-top: 3rem;
+    @include flex();
+    flex-wrap: wrap-reverse;
+    img{
+      width: 40%;
+      transform: rotate(8deg);
+    }
+    .instrunctions{
+      width: 50%;
+      margin-right: 1rem;
+      margin-top: 1rem;
+      ul{
+        li{
+          font-size: 1.5rem;
+        }
+      }
+    }
+  }
+}
+
+.section2{
+ .content{
+   margin-top: 3rem;
+   @include flex();
+   flex-wrap: wrap;
+   img{
+     width: 40%;
+     transform: rotate(-8deg);
+   }
+   .instrunctions{
+     width: 50%;
+     margin-left: 3rem;
+     margin-top: 1rem;
+     ul{
+       li{
+         font-size: 1.5rem;
+       }
+     }
+   }
+ }
 }
 
 @keyframes blink {
@@ -247,6 +320,19 @@ body {
   }
 }
 
+.error{
+  background-color: white;
+  height: 100vh;
+  width: 100vw;
+  @include flex($dir:column);
+  h2{
+    background-color: white;
+    text-align: center;
+  }
+  img{
+    width: 70%;
+  }
+}
 // .focus {
 //   -webkit-animation: color-change-2x 1s ease
 //     infinite alternate both;
